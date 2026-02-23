@@ -1,0 +1,9 @@
+<div class="max-w-4xl mx-auto">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-xl font-bold text-gray-900"><%= @ai_session.title %></h1>
+    <%= link_to "戻る", interview_compatibility_diagnosis_index_path, class: "text-sm text-gray-600 hover:text-indigo-600" %>
+  </div>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+    <%= render "shared/ai_chat_interface", messages: @messages, ai_session: @ai_session, send_message_path: send_message_path %>
+  </div>
+</div>

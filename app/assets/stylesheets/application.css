@@ -1,0 +1,25 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+
+.ai-markdown p { margin-bottom: 0.5rem; }
+.ai-markdown p:last-child { margin-bottom: 0; }
+.ai-markdown strong { font-weight: 700; }
+.ai-markdown em { font-style: italic; }
+.ai-markdown ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 0.5rem; }
+.ai-markdown ol { list-style-type: decimal; padding-left: 1.25rem; margin-bottom: 0.5rem; }
+.ai-markdown li { margin-bottom: 0.25rem; }
+.ai-markdown h1, .ai-markdown h2, .ai-markdown h3 { font-weight: 700; margin-top: 0.75rem; margin-bottom: 0.25rem; }
+.ai-markdown h1 { font-size: 1.125rem; }
+.ai-markdown h2 { font-size: 1rem; }
+.ai-markdown h3 { font-size: 0.9375rem; }
+.ai-markdown code { background: rgba(0,0,0,0.07); border-radius: 3px; padding: 0.1em 0.3em; font-family: monospace; font-size: 0.875em; }
+.ai-markdown blockquote { border-left: 3px solid #d1d5db; padding-left: 0.75rem; color: #6b7280; margin-bottom: 0.5rem; }
+.ai-markdown hr { border: none; border-top: 1px solid #e5e7eb; margin: 0.5rem 0; }

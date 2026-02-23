@@ -1,0 +1,35 @@
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6">模擬面接</h1>
+  <p class="text-gray-600 mb-8">AIが面接官役となり、模擬面接を実施します。</p>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">面接準備を選択</h2>
+    <% if @interview_preps.any? %>
+      <div class="space-y-3">
+        <% @interview_preps.each do |prep| %>
+          <div class="flex justify-between items-center p-3 border border-gray-100 rounded-lg">
+            <div>
+              <span class="font-medium text-gray-700"><%= prep.company_name %></span>
+              <span class="text-xs ml-2 px-2 py-0.5 bg-gray-100 rounded"><%= prep.interview_type_i18n %></span>
+            </div>
+            <%= button_to "模擬面接開始", interview_mock_interview_index_path(interview_prep_id: prep.id), class: "bg-green-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-green-700" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500">面接準備がありません。<%= link_to "面接準備を作成", new_interview_prep_path, class: "text-indigo-600 hover:text-indigo-800" %>してください。</p>
+    <% end %>
+  </div>
+
+  <% if @sessions.any? %>
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">過去のセッション</h2>
+    <div class="space-y-3">
+      <% @sessions.each do |session| %>
+        <%= link_to interview_mock_interview_path(session), class: "block bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:border-green-200" do %>
+          <p class="font-medium text-gray-900"><%= session.title %></p>
+          <p class="text-sm text-gray-500"><%= session.updated_at.strftime("%Y/%m/%d %H:%M") %></p>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

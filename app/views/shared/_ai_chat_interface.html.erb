@@ -1,0 +1,45 @@
+<div class="flex flex-col h-[calc(100vh-12rem)]" data-controller="auto-scroll">
+  <div class="flex-grow overflow-y-auto p-4 space-y-4" id="messages" data-auto-scroll-target="container">
+    <% messages.each do |message| %>
+      <%= render "shared/ai_message", message: message %>
+    <% end %>
+  </div>
+
+  <div id="typing-indicator" class="hidden px-4 pb-2">
+    <div class="flex items-start space-x-3">
+      <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
+        <span class="text-xs font-bold text-indigo-600">AI</span>
+      </div>
+      <div class="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-3">
+        <div class="flex space-x-1">
+          <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+          <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+          <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-gray-200 p-4 bg-white">
+    <%= form_with(
+      url: send_message_path,
+      method: :post,
+      data: {
+        controller: "chat-form",
+        action: "submit->chat-form#submit",
+        chat_form_session_id_value: ai_session.id
+      },
+      class: "flex space-x-3"
+    ) do |f| %>
+      <%= hidden_field_tag :ai_session_id, ai_session.id %>
+      <%= f.text_area :content,
+        placeholder: "メッセージを入力...",
+        rows: 1,
+        class: "flex-grow rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 resize-none",
+        data: { chat_form_target: "input", action: "keydown->chat-form#handleKeydown input->chat-form#autoResize" } %>
+      <%= f.submit "送信",
+        class: "bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
+        data: { chat_form_target: "submit" } %>
+    <% end %>
+  </div>
+</div>

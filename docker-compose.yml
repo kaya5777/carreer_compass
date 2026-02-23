@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: career_compass
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: career_compass_production
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U career_compass"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    environment:
+      DATABASE_URL: postgres://career_compass:password@db:5432/career_compass_production
+      CAREER_COMPASS_DATABASE_PASSWORD: password
+      DB_HOST: db
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      RAILS_ASSUME_SSL: "false"
+      RAILS_FORCE_SSL: "false"
+    ports:
+      - "3000:3000"
+    command: ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

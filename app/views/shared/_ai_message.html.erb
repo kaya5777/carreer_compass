@@ -1,0 +1,18 @@
+<div class="flex items-start space-x-3 <%= message.assistant? ? '' : 'flex-row-reverse space-x-reverse' %>">
+  <% if message.assistant? %>
+    <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
+      <span class="text-xs font-bold text-indigo-600">AI</span>
+    </div>
+  <% else %>
+    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+      <span class="text-xs font-bold text-gray-600">You</span>
+    </div>
+  <% end %>
+  <div class="max-w-[75%] <%= message.assistant? ? 'bg-gray-100 rounded-2xl rounded-tl-none' : 'bg-indigo-600 text-white rounded-2xl rounded-tr-none' %> px-4 py-3">
+    <% if message.assistant? %>
+      <div class="text-sm ai-markdown break-words"><%= markdown(message.content) %></div>
+    <% else %>
+      <div class="text-sm whitespace-pre-wrap break-words"><%= message.content %></div>
+    <% end %>
+  </div>
+</div>

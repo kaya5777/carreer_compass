@@ -1,0 +1,3 @@
+<%= turbo_stream.append "messages" do %>
+  <%= render "shared/ai_message", message: @assistant_message %>
+<% end %>

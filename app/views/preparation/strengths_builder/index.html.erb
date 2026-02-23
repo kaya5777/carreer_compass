@@ -1,0 +1,53 @@
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6">自己PR・強み作成</h1>
+  <p class="text-gray-600 mb-8">AIとの対話を通じて、あなたの強みや実績を整理し、自己PRを作成します。</p>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">新しいセッションを開始</h2>
+    <%= form_with(url: preparation_strengths_builder_index_path, method: :post, class: "space-y-4") do |f| %>
+      <div>
+        <%= f.label :target_role, "希望職種", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.select :target_role,
+          options_for_select([
+            ["選択してください", ""],
+            ["エンジニア", "エンジニア"],
+            ["営業", "営業"],
+            ["マーケティング", "マーケティング"],
+            ["人事", "人事"],
+            ["経理・財務", "経理・財務"],
+            ["企画", "企画"],
+            ["デザイナー", "デザイナー"],
+            ["コンサルタント", "コンサルタント"],
+            ["カスタマーサポート", "カスタマーサポート"],
+            ["その他", "その他"]
+          ]),
+          {},
+          class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+      </div>
+
+      <div>
+        <%= f.label :additional_info, "補足情報（任意）", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.text_area :additional_info,
+          rows: 2,
+          placeholder: "例：Web系企業で5年経験、マネジメント経験あり、など",
+          class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 resize-none" %>
+      </div>
+
+      <div>
+        <%= f.submit "セッションを開始", class: "bg-indigo-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 cursor-pointer" %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @sessions.any? %>
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">過去のセッション</h2>
+    <div class="space-y-3">
+      <% @sessions.each do |session| %>
+        <%= link_to preparation_strengths_builder_path(session), class: "block bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:border-indigo-200" do %>
+          <p class="font-medium text-gray-900"><%= session.title %></p>
+          <p class="text-sm text-gray-500"><%= session.updated_at.strftime("%Y/%m/%d %H:%M") %></p>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

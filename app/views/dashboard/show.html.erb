@@ -1,0 +1,58 @@
+<div class="max-w-6xl mx-auto">
+  <h1 class="text-2xl font-bold text-gray-900 mb-8">ダッシュボード</h1>
+
+  <%# 事前準備 %>
+  <section class="mb-10">
+    <div class="flex items-center mb-4">
+      <span class="text-2xl mr-2">📋</span>
+      <h2 class="text-lg font-bold text-gray-800">事前準備</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <%= render "dashboard/feature_card",
+        title: "自己PR・強み作成",
+        description: "AIとの対話で強みを引き出し、自己PRを作成",
+        icon: "📝",
+        path: preparation_strengths_builder_index_path %>
+
+      <%= render "dashboard/feature_card",
+        title: "職務経歴書レビュー",
+        description: "AIが職務経歴書を添削・改善提案",
+        icon: "🔍",
+        path: nil %>
+
+      <%= render "dashboard/feature_card",
+        title: "カジュアル面談対策",
+        description: "カジュアル面談の準備をAIがサポート",
+        icon: "☕",
+        path: nil %>
+    </div>
+  </section>
+
+  <%# 面接対策 %>
+  <section class="mb-12">
+    <div class="flex items-center mb-4">
+      <span class="text-2xl mr-2">🎯</span>
+      <h2 class="text-lg font-bold text-gray-800">面接対策</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <%= render "dashboard/feature_card",
+        title: "想定質問作成",
+        description: "企業・ポジション別の想定質問を生成",
+        icon: "❓",
+        path: nil %>
+
+      <%= render "dashboard/feature_card",
+        title: "模擬面接",
+        description: "AIと模擬面接で実践練習",
+        icon: "🎤",
+        path: nil %>
+
+      <%= render "dashboard/feature_card",
+        title: "相性診断",
+        description: "企業との相性をAIが分析",
+        icon: "🎯",
+        path: nil %>
+    </div>
+  </section>
+
+</div>

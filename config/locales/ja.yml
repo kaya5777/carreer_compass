@@ -1,0 +1,74 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      resume: 職務経歴書
+      ai_session: AIセッション
+      ai_message: メッセージ
+      interview_prep: 面接準備
+      interview_question: 面接質問
+      mock_answer: 模擬面接回答
+    attributes:
+      user:
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+        display_name: 表示名
+        career_stage:
+          considering: 検討中
+          actively_looking: 積極的に活動中
+          interviewing: 面接中
+          offered: 内定獲得
+      resume:
+        title: タイトル
+        personal_summary: 職務要約
+        work_history: 職務経歴
+        skills: スキル
+        self_promotion: 自己PR
+        target_industry: 志望業界
+        target_role: 志望職種
+        status:
+          draft: 下書き
+          in_progress: 作成中
+          completed: 完成
+      interview_prep:
+        company_name: 企業名
+        job_posting: 求人情報
+        company_info: 企業情報
+        interview_type:
+          casual: カジュアル面談
+          first_round: 一次面接
+          technical: 技術面接
+          final_round: 最終面接
+        status:
+          draft: 下書き
+          in_progress: 準備中
+          completed: 完了
+      interview_question:
+        question_text: 質問文
+        suggested_answer: 回答例
+        category:
+          self_introduction: 自己紹介
+          motivation: 志望動機
+          experience: 経験
+          technical: 技術
+          behavioral: 行動特性
+          company_specific: 企業固有
+          future_goals: 将来の目標
+        difficulty:
+          easy: 易しい
+          medium: 普通
+          hard: 難しい
+      ai_session:
+        title: タイトル
+        session_type:
+          resume_builder: 職務経歴書作成サポート
+          resume_review: 職務経歴書レビュー
+          casual_interview_prep: カジュアル面談対策
+          question_generator: 想定質問作成
+          mock_interview: 模擬面接
+          compatibility_diagnosis: 相性診断
+        status:
+          active: アクティブ
+          completed: 完了
+          archived: アーカイブ

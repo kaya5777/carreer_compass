@@ -1,0 +1,32 @@
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6">職務経歴書レビュー</h1>
+  <p class="text-gray-600 mb-8">AIが職務経歴書を添削し、改善点を提案します。</p>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">レビューする職務経歴書を選択</h2>
+    <% if @resumes.any? %>
+      <div class="space-y-3">
+        <% @resumes.each do |resume| %>
+          <div class="flex justify-between items-center p-3 border border-gray-100 rounded-lg">
+            <span class="font-medium text-gray-700"><%= resume.title %></span>
+            <%= button_to "レビュー開始", preparation_resume_review_index_path(resume_id: resume.id), class: "bg-purple-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-purple-700" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500">レビューする職務経歴書がありません。<%= link_to "職務経歴書を作成", new_resume_path, class: "text-indigo-600 hover:text-indigo-800" %>してください。</p>
+    <% end %>
+  </div>
+
+  <% if @sessions.any? %>
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">過去のレビュー</h2>
+    <div class="space-y-3">
+      <% @sessions.each do |session| %>
+        <%= link_to preparation_resume_review_path(session), class: "block bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:border-purple-200" do %>
+          <p class="font-medium text-gray-900"><%= session.title %></p>
+          <p class="text-sm text-gray-500"><%= session.updated_at.strftime("%Y/%m/%d %H:%M") %></p>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
