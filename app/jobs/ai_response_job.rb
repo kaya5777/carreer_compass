@@ -37,7 +37,7 @@ class AiResponseJob < ApplicationJob
     when "casual_interview_prep"
       CasualInterviewPrepService.new(ai_session.user, ai_session.sessionable)
     when "question_generator"
-      QuestionGeneratorService.new(ai_session.user, ai_session.sessionable)
+      QuestionGeneratorService.new(ai_session.user)
     when "mock_interview"
       MockInterviewService.new(ai_session.user, ai_session.sessionable)
     when "compatibility_diagnosis"

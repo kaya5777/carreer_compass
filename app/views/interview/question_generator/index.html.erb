@@ -3,21 +3,51 @@
   <p class="text-gray-600 mb-8">企業・ポジションに合わせた面接想定質問をAIが生成します。</p>
 
   <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">面接準備を選択</h2>
-    <% if @interview_preps.any? %>
-      <div class="space-y-3">
-        <% @interview_preps.each do |prep| %>
-          <div class="flex justify-between items-center p-3 border border-gray-100 rounded-lg">
-            <div>
-              <span class="font-medium text-gray-700"><%= prep.company_name %></span>
-              <span class="text-xs ml-2 px-2 py-0.5 bg-gray-100 rounded"><%= prep.interview_type_i18n %></span>
-            </div>
-            <%= button_to "質問作成", interview_question_generator_index_path(interview_prep_id: prep.id), class: "bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700" %>
-          </div>
-        <% end %>
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">新しいセッションを開始</h2>
+    <%= form_with(url: interview_question_generator_index_path, method: :post, class: "space-y-4") do |f| %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <%= f.label :company_name, "企業名（任意）", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.text_field :company_name,
+            placeholder: "例：株式会社○○",
+            class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+        </div>
+
+        <div>
+          <%= f.label :position, "応募ポジション（任意）", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.text_field :position,
+            placeholder: "例：Webエンジニア、営業マネージャー",
+            class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+        </div>
       </div>
-    <% else %>
-      <p class="text-gray-500">面接準備がありません。<%= link_to "面接準備を作成", new_interview_prep_path, class: "text-indigo-600 hover:text-indigo-800" %>してください。</p>
+
+      <div>
+        <%= f.label :interview_type, "面接タイプ", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.select :interview_type,
+          options_for_select([
+            ["選択してください", ""],
+            ["カジュアル面談", "カジュアル面談"],
+            ["一次面接", "一次面接"],
+            ["二次面接", "二次面接"],
+            ["技術面接", "技術面接"],
+            ["最終面接", "最終面接"],
+            ["その他", "その他"]
+          ]),
+          {},
+          class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+      </div>
+
+      <div>
+        <%= f.label :additional_info, "補足情報（任意）", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.text_area :additional_info,
+          rows: 3,
+          placeholder: "例：求人票の内容、企業の特徴、応募の経緯など",
+          class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 resize-none" %>
+      </div>
+
+      <div>
+        <%= f.submit "質問を作成", class: "bg-indigo-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 cursor-pointer" %>
+      </div>
     <% end %>
   </div>
 
@@ -25,7 +55,7 @@
     <h2 class="text-lg font-semibold text-gray-900 mb-4">過去のセッション</h2>
     <div class="space-y-3">
       <% @sessions.each do |session| %>
-        <%= link_to interview_question_generator_path(session), class: "block bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200" do %>
+        <%= link_to interview_question_generator_path(session), class: "block bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:border-indigo-200" do %>
           <p class="font-medium text-gray-900"><%= session.title %></p>
           <p class="text-sm text-gray-500"><%= session.updated_at.strftime("%Y/%m/%d %H:%M") %></p>
         <% end %>

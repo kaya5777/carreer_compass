@@ -1,12 +1,11 @@
 module PromptBuilders
   class QuestionGeneratorPrompt < BasePromptBuilder
     def build_initial_message
-      prep = @options[:interview_prep]
-      parts = [ "以下の企業・ポジションの面接想定質問を作成してください。\n" ]
-      parts << "企業名: #{prep.company_name}"
-      parts << "面接タイプ: #{prep.interview_type_i18n}"
-      parts << "求人情報:\n#{prep.job_posting}" if prep.job_posting.present?
-      parts << "企業情報:\n#{prep.company_info}" if prep.company_info.present?
+      parts = [ "以下の情報をもとに、面接の想定質問を作成してください。\n" ]
+      parts << "企業名: #{@options[:company_name]}" if @options[:company_name].present?
+      parts << "応募ポジション: #{@options[:position]}" if @options[:position].present?
+      parts << "面接タイプ: #{@options[:interview_type]}" if @options[:interview_type].present?
+      parts << "補足情報:\n#{@options[:additional_info]}" if @options[:additional_info].present?
       parts.join("\n")
     end
 
