@@ -15,7 +15,7 @@ module Interview
         company_name: params[:company_name],
         position: params[:position],
         interview_type: params[:interview_type],
-        additional_info: params[:additional_info]
+        additional_info: params[:additional_info],
       )
       @ai_session = service.start_session
 

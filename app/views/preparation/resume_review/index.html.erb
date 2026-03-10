@@ -1,23 +1,54 @@
 <div class="max-w-4xl mx-auto">
-  <h1 class="text-2xl font-bold text-gray-900 mb-6">職務経歴書レビュー</h1>
-  <p class="text-gray-600 mb-8">AIが職務経歴書を添削し、改善点を提案します。</p>
+  <h1 class="text-2xl font-bold text-gray-900 mb-2">職務経歴書レビュー</h1>
+  <p class="text-gray-600 mb-8">職務経歴書をPDFでアップロードすると、AIが改善点を具体的にアドバイスします。</p>
 
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">レビューする職務経歴書を選択</h2>
-    <% if @resumes.any? %>
-      <div class="space-y-3">
-        <% @resumes.each do |resume| %>
-          <div class="flex justify-between items-center p-3 border border-gray-100 rounded-lg">
-            <span class="font-medium text-gray-700"><%= resume.title %></span>
-            <%= button_to "レビュー開始", preparation_resume_review_index_path(resume_id: resume.id), class: "bg-purple-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-purple-700" %>
-          </div>
-        <% end %>
+  <%# PDFアップロードフォーム %>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-1">職務経歴書をアップロードする</h2>
+    <p class="text-sm text-gray-500 mb-4">PDFファイルをアップロードするだけでレビューを始められます。</p>
+    <%= form_with url: resumes_path, method: :post, multipart: true do |f| %>
+      <div class="space-y-4">
+        <div>
+          <%= f.file_field :pdf_file,
+            accept: "application/pdf",
+            class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500",
+            name: "resume[pdf_file]",
+            required: true %>
+          <p class="text-xs text-gray-400 mt-1">PDFファイルのみ対応しています</p>
+        </div>
+        <%= f.submit "アップロードしてレビューを始める", class: "bg-purple-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 cursor-pointer" %>
       </div>
-    <% else %>
-      <p class="text-gray-500">レビューする職務経歴書がありません。<%= link_to "職務経歴書を作成", new_resume_path, class: "text-indigo-600 hover:text-indigo-800" %>してください。</p>
     <% end %>
   </div>
 
+  <%# 保存済み職務経歴書一覧 %>
+  <% if @resumes.any? %>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">保存済みの職務経歴書</h2>
+      <div class="space-y-3">
+        <% @resumes.each do |resume| %>
+          <div class="flex justify-between items-center p-3 border border-gray-100 rounded-lg">
+            <div>
+              <span class="font-medium text-gray-700"><%= resume.title %></span>
+              <% if resume.pdf_file.attached? %>
+                <span class="ml-2 text-xs text-gray-400">PDF添付済み</span>
+              <% end %>
+            </div>
+            <div class="flex gap-2 items-center">
+              <%= button_to "レビューを始める", preparation_resume_review_index_path(resume_id: resume.id),
+                class: "bg-purple-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-purple-700" %>
+              <%= button_to "削除", resume_path(resume),
+                method: :delete,
+                data: { turbo_confirm: "「#{resume.title}」を削除しますか？" },
+                class: "text-gray-400 hover:text-red-500 text-sm px-2 py-1.5 bg-transparent border-0 cursor-pointer" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <%# 過去のレビュー %>
   <% if @sessions.any? %>
     <h2 class="text-lg font-semibold text-gray-900 mb-4">過去のレビュー</h2>
     <div class="space-y-3">

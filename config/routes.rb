@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   get "dashboard" => "dashboard#show"
 
+  resources :interview_preps, only: [ :create, :destroy ]
+  resources :resumes, only: [ :create, :destroy ]
+
   namespace :preparation do
     resources :strengths_builder, only: [ :index, :show, :create ]
     resources :resume_review, only: [ :index, :show, :create ]

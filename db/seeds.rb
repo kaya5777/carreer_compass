@@ -29,23 +29,4 @@ resume2 = user.resumes.find_or_create_by!(title: "プロジェクトマネージ
 end
 puts "Created resume: #{resume2.title}"
 
-# Create interview preps
-prep1 = user.interview_preps.find_or_create_by!(company_name: "株式会社イノベーション") do |p|
-  p.resume = resume1
-  p.job_posting = "【募集職種】シニアバックエンドエンジニア\n【必須スキル】Ruby on Rails 3年以上、チーム開発経験\n【歓迎スキル】マイクロサービス、Kubernetes\n【年収】600万〜900万円"
-  p.company_info = "2015年設立のBtoB SaaS企業。従業員300名。リモートワーク可。フレックスタイム制。"
-  p.interview_type = :first_round
-  p.status = :in_progress
-end
-puts "Created interview prep: #{prep1.company_name}"
-
-prep2 = user.interview_preps.find_or_create_by!(company_name: "グローバルテック株式会社") do |p|
-  p.resume = resume1
-  p.job_posting = "【募集職種】テックリード\n【必須スキル】Web開発5年以上、チームリード経験\n【年収】800万〜1200万円"
-  p.company_info = "外資系テクノロジー企業の日本法人。グローバルなチームとの協業あり。"
-  p.interview_type = :casual
-  p.status = :draft
-end
-puts "Created interview prep: #{prep2.company_name}"
-
 puts "Seed data created successfully!"

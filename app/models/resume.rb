@@ -2,6 +2,7 @@ class Resume < ApplicationRecord
   include EnumI18n
 
   belongs_to :user
+  has_one_attached :pdf_file
   has_many :ai_sessions, as: :sessionable, dependent: :destroy
   has_many :interview_preps, dependent: :destroy
 

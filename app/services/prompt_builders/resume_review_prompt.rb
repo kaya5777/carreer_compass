@@ -6,10 +6,14 @@ module PromptBuilders
       parts << "【タイトル】#{resume.title}" if resume.title.present?
       parts << "【志望業界】#{resume.target_industry}" if resume.target_industry.present?
       parts << "【志望職種】#{resume.target_role}" if resume.target_role.present?
-      parts << "\n【職務要約】\n#{resume.personal_summary}" if resume.personal_summary.present?
-      parts << "\n【職務経歴】\n#{resume.work_history}" if resume.work_history.present?
-      parts << "\n【スキル】\n#{resume.skills}" if resume.skills.present?
-      parts << "\n【自己PR】\n#{resume.self_promotion}" if resume.self_promotion.present?
+      if resume.raw_content.present?
+        parts << "\n【職務経歴書（PDFより抽出）】\n#{resume.raw_content}"
+      else
+        parts << "\n【職務要約】\n#{resume.personal_summary}" if resume.personal_summary.present?
+        parts << "\n【職務経歴】\n#{resume.work_history}" if resume.work_history.present?
+        parts << "\n【スキル】\n#{resume.skills}" if resume.skills.present?
+        parts << "\n【自己PR】\n#{resume.self_promotion}" if resume.self_promotion.present?
+      end
       parts.join("\n")
     end
 

@@ -22,6 +22,9 @@ gem "redcarpet"
 gem "faraday"
 gem "faraday-retry"
 
+# PDF
+gem "pdf-reader"
+
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "solid_cache"
 gem "solid_queue"

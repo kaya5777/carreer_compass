@@ -1,22 +1,71 @@
 <div class="max-w-4xl mx-auto">
-  <h1 class="text-2xl font-bold text-gray-900 mb-6">カジュアル面談対策</h1>
-  <p class="text-gray-600 mb-8">カジュアル面談に向けた準備をAIがサポートします。</p>
+  <h1 class="text-2xl font-bold text-gray-900 mb-2">カジュアル面談対策</h1>
+  <p class="text-gray-600 mb-8">受ける企業の情報を入力して、AIとのチャットで面談の準備をしましょう。</p>
 
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">面談対策を開始</h2>
-    <% if @interview_preps.any? %>
-      <div class="space-y-3 mb-4">
+  <%# 企業登録フォーム %>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-1">企業を追加する</h2>
+    <p class="text-sm text-gray-500 mb-4">会社名だけでも追加できます。情報が多いほどAIのサポートが充実します。</p>
+    <%= form_with url: interview_preps_path, method: :post do |f| %>
+      <div class="space-y-4">
+        <div>
+          <%= f.label :company_name, "会社名 *", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.text_field :company_name,
+            placeholder: "例：株式会社◯◯",
+            class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500",
+            name: "interview_prep[company_name]",
+            required: true %>
+        </div>
+        <div>
+          <%= f.label :job_posting, "求人情報（任意）", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.text_area :job_posting,
+            placeholder: "求人票の内容や募集職種を貼り付けてください",
+            rows: 3,
+            class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500",
+            name: "interview_prep[job_posting]" %>
+        </div>
+        <div>
+          <%= f.label :company_info, "企業情報（任意）", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.text_area :company_info,
+            placeholder: "企業のサービス概要や気になる点などを書いてください",
+            rows: 3,
+            class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500",
+            name: "interview_prep[company_info]" %>
+        </div>
+        <%= f.submit "追加する", class: "bg-pink-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-pink-700 cursor-pointer" %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# 登録済み企業一覧 %>
+  <% if @interview_preps.any? %>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">登録済みの企業</h2>
+      <div class="space-y-3">
         <% @interview_preps.each do |prep| %>
           <div class="flex justify-between items-center p-3 border border-gray-100 rounded-lg">
             <span class="font-medium text-gray-700"><%= prep.company_name %></span>
-            <%= button_to "対策開始", preparation_casual_interview_prep_index_path(interview_prep_id: prep.id), class: "bg-pink-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-pink-700" %>
+            <div class="flex gap-2 items-center">
+              <%= button_to "対策を始める", preparation_casual_interview_prep_index_path(interview_prep_id: prep.id),
+                class: "bg-pink-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-pink-700" %>
+              <%= button_to "削除", interview_prep_path(prep),
+                method: :delete,
+                data: { turbo_confirm: "#{prep.company_name}を削除しますか？" },
+                class: "text-gray-400 hover:text-red-500 text-sm px-2 py-1.5 bg-transparent border-0 cursor-pointer" %>
+            </div>
           </div>
         <% end %>
       </div>
-    <% end %>
-    <%= button_to "企業未指定で開始", preparation_casual_interview_prep_index_path, class: "bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm hover:bg-gray-200 font-medium" %>
-  </div>
+    </div>
 
+    <%# 企業未指定で開始（企業がある場合のみ表示） %>
+    <div class="text-center mb-8">
+      <%= button_to "企業を決めずに始める", preparation_casual_interview_prep_index_path,
+        class: "text-sm text-gray-400 underline hover:text-gray-600 bg-transparent border-0 cursor-pointer" %>
+    </div>
+  <% end %>
+
+  <%# 過去のセッション %>
   <% if @sessions.any? %>
     <h2 class="text-lg font-semibold text-gray-900 mb-4">過去のセッション</h2>
     <div class="space-y-3">
