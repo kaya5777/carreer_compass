@@ -16,7 +16,7 @@ class InterviewPrepsController < ApplicationController
   def destroy
     interview_prep = current_user.interview_preps.find(params[:id])
     interview_prep.destroy
-    redirect_to preparation_casual_interview_prep_index_path, notice: "企業を削除しました"
+    redirect_back fallback_location: preparation_casual_interview_prep_index_path, notice: "企業を削除しました"
   end
 
   private

@@ -1,6 +1,6 @@
 class GeminiClient
   API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
-  DEFAULT_MODEL = "gemini-2.5-flash"
+  DEFAULT_MODEL = "gemini-3-flash-preview"
   MAX_RETRIES = 3
   RETRY_DELAY = 1
 

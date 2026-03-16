@@ -11,8 +11,23 @@ module Interview
     end
 
     def create
-      interview_prep = current_user.interview_preps.find(params[:interview_prep_id])
-      resume = current_user.resumes.find(params[:resume_id]) if params[:resume_id].present?
+      if params[:interview_prep_id].present?
+        interview_prep = current_user.interview_preps.find(params[:interview_prep_id])
+      else
+        interview_prep = current_user.interview_preps.build(
+          company_name: params[:company_name],
+          job_posting: params[:job_posting],
+          company_info: params[:company_info],
+          interview_type: :formal,
+          status: :draft
+        )
+        unless interview_prep.save
+          redirect_to interview_compatibility_diagnosis_index_path, alert: interview_prep.errors.full_messages.join(", ")
+          return
+        end
+      end
+
+      resume = current_user.resumes.order(updated_at: :desc).first
       service = CompatibilityDiagnosisService.new(current_user, interview_prep, resume)
       @ai_session = service.start_session
 

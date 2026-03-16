@@ -12,7 +12,22 @@ module Interview
     end
 
     def create
-      interview_prep = current_user.interview_preps.find(params[:interview_prep_id])
+      if params[:interview_prep_id].present?
+        interview_prep = current_user.interview_preps.find(params[:interview_prep_id])
+      else
+        interview_prep = current_user.interview_preps.build(
+          company_name: params[:company_name],
+          job_posting: params[:job_posting],
+          company_info: params[:company_info],
+          interview_type: :formal,
+          status: :draft
+        )
+        unless interview_prep.save
+          redirect_to interview_mock_interview_index_path, alert: interview_prep.errors.full_messages.join(", ")
+          return
+        end
+      end
+
       service = MockInterviewService.new(current_user, interview_prep)
       @ai_session = service.start_session
 
