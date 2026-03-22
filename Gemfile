@@ -11,6 +11,8 @@ gem "tailwindcss-rails"
 
 # Authentication
 gem "devise"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
 
 # Environment variables
 gem "dotenv-rails", groups: [ :development, :test ]
@@ -44,6 +46,7 @@ end
 
 group :development do
   gem "web-console"
+  gem "letter_opener_web"
 end
 
 group :test do

@@ -23,9 +23,9 @@ services:
       CAREER_COMPASS_DATABASE_PASSWORD: password
       DB_HOST: db
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      GEMINI_API_KEY: ${GEMINI_API_KEY}
       RAILS_ASSUME_SSL: "false"
       RAILS_FORCE_SSL: "false"
+      BUNDLE_WITHOUT: ""
     volumes:
       - .:/rails
       - bundle_cache:/usr/local/bundle
