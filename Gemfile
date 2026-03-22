@@ -24,6 +24,9 @@ gem "redcarpet"
 gem "faraday"
 gem "faraday-retry"
 
+# Email
+gem "resend"
+
 # PDF
 gem "pdf-reader"
 
