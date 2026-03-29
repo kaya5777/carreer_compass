@@ -4,11 +4,14 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
-      user.email = auth.info.email
-      user.display_name = auth.info.name
-      user.password = Devise.friendly_token[0, 20]
-    end.tap(&:save!)
+    user = where(provider: auth.provider, uid: auth.uid).first
+    user ||= find_by(email: auth.info.email)
+    user ||= new(email: auth.info.email, display_name: auth.info.name, password: Devise.friendly_token[0, 20])
+    user.provider = auth.provider
+    user.uid = auth.uid
+    user.display_name ||= auth.info.name
+    user.save!
+    user
   end
 
   has_many :resumes, dependent: :destroy
